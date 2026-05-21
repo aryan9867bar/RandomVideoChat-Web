@@ -76,7 +76,7 @@ const ChatRoom = ({
             </div>
             <div>
               <h1 className="font-display text-xl font-bold">
-                <span className="gradient-text">Nexus</span> Chat
+                <span className="gradient-text">Wave</span> Chat
               </h1>
             </div>
           </div>

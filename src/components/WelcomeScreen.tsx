@@ -32,7 +32,7 @@ const WelcomeScreen = ({ onRegister }: WelcomeScreenProps) => {
             <Video className="w-10 h-10 text-primary" />
           </div>
           <h1 className="font-display text-5xl font-bold">
-            <span className="gradient-text">Nexus</span>
+            <span className="gradient-text">Wave</span>
             <span className="text-foreground"> Chat</span>
           </h1>
           <p className="text-lg text-muted-foreground max-w-sm mx-auto">
