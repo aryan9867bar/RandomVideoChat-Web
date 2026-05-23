@@ -32,16 +32,7 @@ const Index = () => {
   const pendingSignalsRef = useRef<any[]>([]);
   const isVerifiedRef = useRef<boolean>(false);
 
-  // const { toast } = useToast(); // for metered
   const { toast } = useToast();
-
-  const getTurnCredentials = async () => {
-    const response = await fetch(
-      "https://wavechatrandomvideochat.metered.live/api/v1/turn/credentials?apiKey=JXlto2DUzfMAW3K2RRL0r8SPVd8q2hZzuRUskvFxrTyBiLjd"
-    );
-    const iceServers = await response.json();
-    return iceServers;
-  };
 
   // Helper to send signal - queues if WS not ready
   const sendSignal = useCallback(
@@ -215,48 +206,39 @@ const Index = () => {
   }, [cleanupPeerConnection, name, toast]);
 
   // Create peer connection for initiator
-  // const createInitiatorPeer = useCallback(
-  //   (stream: MediaStream, room_code: string, peer: string) => {
   const createInitiatorPeer = useCallback(
-    async (stream: MediaStream, room_code: string, peer: string) => {
+    (stream: MediaStream, room_code: string, peer: string) => {
       console.log("[webrtc] Creating peer as initiator");
       // toast({ title: "🚀 Initiator", description: "Creating WebRTC connection as initiator..." });
       console.log("Starting to create peer object");
-      // const peerObj = new SimplePeer({
-      //   initiator: true,
-      //   trickle: true,
-      //   stream,
-      //   config: {
-      //     iceServers: [
-      //       { urls: "stun:stun.l.google.com:19302" },
-      //       { urls: "stun:stun1.l.google.com:19302" },
-      //       { urls: "stun:stun2.l.google.com:19302" },
-      //       { urls: "stun:stun3.l.google.com:19302" },
-      //       { urls: "stun:stun4.l.google.com:19302" },
-      //       {
-      //         urls: "turn:openrelay.metered.ca:80",
-      //         username: "openrelayproject",
-      //         credential: "openrelayproject",
-      //       },
-      //       {
-      //         urls: "turn:openrelay.metered.ca:443",
-      //         username: "openrelayproject",
-      //         credential: "openrelayproject",
-      //       },
-      //       {
-      //         urls: "turn:openrelay.metered.ca:443?transport=tcp",
-      //         username: "openrelayproject",
-      //         credential: "openrelayproject",
-      //       },
-      //     ],
-      //   },
-      // });
-      const iceServers = await getTurnCredentials();
       const peerObj = new SimplePeer({
         initiator: true,
         trickle: true,
         stream,
-        config: { iceServers },
+        config: {
+          iceServers: [
+            { urls: "stun:stun.l.google.com:19302" },
+            { urls: "stun:stun1.l.google.com:19302" },
+            { urls: "stun:stun2.l.google.com:19302" },
+            { urls: "stun:stun3.l.google.com:19302" },
+            { urls: "stun:stun4.l.google.com:19302" },
+            {
+              urls: "turn:openrelay.metered.ca:80",
+              username: "openrelayproject",
+              credential: "openrelayproject",
+            },
+            {
+              urls: "turn:openrelay.metered.ca:443",
+              username: "openrelayproject",
+              credential: "openrelayproject",
+            },
+            {
+              urls: "turn:openrelay.metered.ca:443?transport=tcp",
+              username: "openrelayproject",
+              credential: "openrelayproject",
+            },
+          ],
+        },
       });
 
       console.log("Peer Object Created");
@@ -360,15 +342,8 @@ const Index = () => {
   };
 
   // Create peer connection for responder
-  // const createResponderPeer = useCallback(
-  //   (
-  //     stream: MediaStream,
-  //     signalData: any,
-  //     room_code: string,
-  //     fromPeer: string
-  //   ) => {
-    const createResponderPeer = useCallback(
-    async (
+  const createResponderPeer = useCallback(
+    (
       stream: MediaStream,
       signalData: any,
       room_code: string,
@@ -377,41 +352,34 @@ const Index = () => {
       console.log("[webrtc] Creating peer as responder");
       // toast({ title: "📡 Responder", description: "Creating WebRTC connection as responder..." });
 
-      // const peerObj = new SimplePeer({
-      //   initiator: false,
-      //   trickle: true,
-      //   stream,
-      //   config: {
-      //     iceServers: [
-      //       { urls: "stun:stun.l.google.com:19302" },
-      //       { urls: "stun:stun1.l.google.com:19302" },
-      //       { urls: "stun:stun2.l.google.com:19302" },
-      //       { urls: "stun:stun3.l.google.com:19302" },
-      //       { urls: "stun:stun4.l.google.com:19302" },
-      //       {
-      //         urls: "turn:openrelay.metered.ca:80",
-      //         username: "openrelayproject",
-      //         credential: "openrelayproject",
-      //       },
-      //       {
-      //         urls: "turn:openrelay.metered.ca:443",
-      //         username: "openrelayproject",
-      //         credential: "openrelayproject",
-      //       },
-      //       {
-      //         urls: "turn:openrelay.metered.ca:443?transport=tcp",
-      //         username: "openrelayproject",
-      //         credential: "openrelayproject",
-      //       },
-      //     ],
-      //   },
-      // });
-      const iceServers = await getTurnCredentials();
       const peerObj = new SimplePeer({
         initiator: false,
         trickle: true,
         stream,
-        config: { iceServers },
+        config: {
+          iceServers: [
+            { urls: "stun:stun.l.google.com:19302" },
+            { urls: "stun:stun1.l.google.com:19302" },
+            { urls: "stun:stun2.l.google.com:19302" },
+            { urls: "stun:stun3.l.google.com:19302" },
+            { urls: "stun:stun4.l.google.com:19302" },
+            {
+              urls: "turn:openrelay.metered.ca:80",
+              username: "openrelayproject",
+              credential: "openrelayproject",
+            },
+            {
+              urls: "turn:openrelay.metered.ca:443",
+              username: "openrelayproject",
+              credential: "openrelayproject",
+            },
+            {
+              urls: "turn:openrelay.metered.ca:443?transport=tcp",
+              username: "openrelayproject",
+              credential: "openrelayproject",
+            },
+          ],
+        },
       });
 
       peerObj.on("signal", (data) => {
