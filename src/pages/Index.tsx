@@ -182,7 +182,7 @@ const Index = () => {
     toast({ title: "Searching", description: "Looking for a new match..." });
 
     try {
-      const resp = await fetch("http://127.0.0.1:8000/registerForMatching", {
+      const resp = await fetch("https://matching-service-iyxv.onrender.com/registerForMatching", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name }),
@@ -555,7 +555,8 @@ const Index = () => {
 
       // toast({ title: "🔌 Signaling WS", description: "Connecting to signaling server..." });
       const ws = new WebSocket(
-        `ws://127.0.0.1:8001/ws/${encodeURIComponent(username)}`
+        // `ws://127.0.0.1:8001/ws/${encodeURIComponent(username)}`
+        `wss://signalling-service.onrender.com/ws/${encodeURIComponent(username)}`
       );
 
       ws.onopen = () => {
@@ -594,7 +595,8 @@ const Index = () => {
 
       // toast({ title: "🔌 Matching WS", description: "Connecting to matching server..." });
       const ws = new WebSocket(
-        `ws://127.0.0.1:8000/ws/${encodeURIComponent(username)}`
+        // `ws://127.0.0.1:8000/ws/${encodeURIComponent(username)}`
+        `wss://matching-service-iyxv.onrender.com/ws/${encodeURIComponent(username)}`
         // for production development wss => `wss://127.0.0.1:8000/ws/${encodeURIComponent(username)}`
       );
 
@@ -762,7 +764,7 @@ const Index = () => {
       setName(userName);
 
       try {
-        const resp = await fetch("http://127.0.0.1:8000/registerForMatching", {
+        const resp = await fetch("https://matching-service-iyxv.onrender.com/registerForMatching", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ name: userName }),
